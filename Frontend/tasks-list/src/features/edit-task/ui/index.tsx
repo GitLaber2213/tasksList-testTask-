@@ -3,6 +3,7 @@ import { Button, ButtonVariations, Error, ERRORS, ErrorVariations, Input, InputV
 import { useForm } from "react-hook-form";
 import { editTaskApi } from "../api/api";
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 export const EditTask = () => {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ export const EditTask = () => {
     const [editTask, { isLoading: editTaskLoading, error: editTaskError }] = editTaskApi.useEditTaskMutation();
 
     const { register, handleSubmit, setValue, formState } = useForm<ITask>({
-        mode: "onSubmit",
+        mode: "onChange",
     });
     const onSubmit = async (data: ITask) => {
         await editTask({ id: taskId, title: data.title });
@@ -22,13 +23,17 @@ export const EditTask = () => {
         };
     };
 
+    useEffect(() => {
+        if (task) {
+            setValue("title", task.title);
+        };
+    }, [task, setValue]);
+
 
     if (getTaskLoading || editTaskLoading) {
         return (
             <Loader type={LoaderVariations.DEFAULT} />
         );
-    } else if (!getTaskLoading) {
-        setValue("title", task?.title || "");
     };
 
     if (getTaskError) {

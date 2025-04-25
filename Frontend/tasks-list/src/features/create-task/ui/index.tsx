@@ -11,7 +11,7 @@ export const CreateTask = () => {
     const [createTask, { isLoading: createTaskLoading, error: createTaskError }] = createTaskApi.useCreateTaskMutation();
 
     const { register, handleSubmit, formState } = useForm<ITask>({
-        mode: "onSubmit",
+        mode: "onChange",
     });
 
     const onSubmit = async (data: ITask) => {
