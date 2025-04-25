@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 type Props = {
-    checked: boolean
-}
+    checked: boolean;
+};
 
 export const CardContainer = styled.div`
     max-width: 100%;
+    height: 25px;
     display: flex;
     border-radius: 10px;
     align-items: center;

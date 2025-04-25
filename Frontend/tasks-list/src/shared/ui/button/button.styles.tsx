@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { HoverColorVariations } from "./hover-color-variations";
 
+type Props = { $hoverColor?: HoverColorVariations };
 
-
-export const BasicButton = styled.button`
+export const BasicButton = styled.button<Props>`
     width: 100%;
     height: 100%;
     
@@ -20,7 +21,9 @@ export const BasicButton = styled.button`
     }
 
     &:hover {
-        cursor: pointer;
         background-color:rgb(90, 209, 110);
+        ${({ $hoverColor }) => $hoverColor === HoverColorVariations.GREEN && `background-color:rgb(90, 209, 110);`}
+        ${({ $hoverColor }) => $hoverColor === HoverColorVariations.RED && `background-color: tomato;`}
+        cursor: pointer;
     }
 `;

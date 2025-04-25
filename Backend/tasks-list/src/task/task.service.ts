@@ -6,22 +6,26 @@ import { PrismaService } from 'src/prisma.service';
 export class TaskService {
   constructor(private readonly prisma: PrismaService) { }
   async create(createTaskDto: CreateTaskDto) {
-    return this.prisma.task.create({ data: createTaskDto });
+    return await this.prisma.task.create({ data: createTaskDto });
   }
 
   async findAll() {
-    return this.prisma.task.findMany();
+    return await this.prisma.task.findMany({
+      orderBy: {
+        id: 'asc',
+      }
+    });
   }
 
   async findOne(id: number) {
-    return this.prisma.task.findFirst({ where: { id } });
+    return await this.prisma.task.findFirst({ where: { id } });
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto) {
-    return this.prisma.task.update({ where: { id }, data: updateTaskDto });
+    return await this.prisma.task.update({ where: { id }, data: updateTaskDto });
   }
 
   async remove(id: number) {
-    return this.prisma.task.delete({ where: { id } })
+    return await this.prisma.task.delete({ where: { id } })
   }
 }

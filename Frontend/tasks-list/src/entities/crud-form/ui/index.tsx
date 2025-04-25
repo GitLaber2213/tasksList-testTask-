@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button, ButtonVariations, ROUTES } from "@/shared";
+import { Button, ButtonVariations, HoverColorVariations, ROUTES } from "@/shared";
 import { Form, FormContainer, InputContainer, OptionalMenuContainer } from "./crud-form.styles";
 
 
@@ -20,7 +20,7 @@ export const CRUDForm: React.FC<Props> = ({ children, onSubmit, submitButton}) =
                 </InputContainer>
                 
                 <OptionalMenuContainer>
-                    <Button type_={ButtonVariations.BASIC} type="button" onClick={() => navigate(ROUTES.MAIN)}><span>&#8592; Back</span></Button>
+                    <Button hoverColor={HoverColorVariations.RED} type_={ButtonVariations.BASIC} type="button" onClick={() => navigate(ROUTES.MAIN)}><span>&#8592; Back</span></Button>
                     {submitButton}
                 </OptionalMenuContainer>
             </Form>

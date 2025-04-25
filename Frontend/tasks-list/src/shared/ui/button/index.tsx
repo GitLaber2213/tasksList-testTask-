@@ -1,17 +1,19 @@
 import { ButtonVariations } from "./button-variations";
 import { BasicButton } from "./button.styles";
+import { HoverColorVariations } from "./hover-color-variations";
 
 type Props = {
     type_: ButtonVariations;
-    children: React.ReactNode
-} & React.ButtonHTMLAttributes<HTMLButtonElement>
+    children: React.ReactNode;
+    hoverColor?: HoverColorVariations;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const getButtonType = (type: ButtonVariations) => ({
     [ButtonVariations.BASIC]: BasicButton,
-}[type])
+}[type]);
 
 
-export const Button: React.FC<Props> = ({ type_, children, ...ButtonHTMLAttributes }) => {
+export const Button: React.FC<Props> = ({ type_, children, hoverColor, ...ButtonHTMLAttributes }) => {
     const ButtonType = getButtonType(type_);
-    return <ButtonType {...ButtonHTMLAttributes}>{children}</ButtonType>
-}
+    return <ButtonType $hoverColor={hoverColor} {...ButtonHTMLAttributes}>{children}</ButtonType>
+};

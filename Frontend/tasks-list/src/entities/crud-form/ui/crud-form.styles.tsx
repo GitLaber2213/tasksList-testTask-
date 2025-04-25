@@ -35,6 +35,6 @@ export const OptionalMenuContainer = styled.div`
     display: flex;
     justify-content: space-between;
     
-    gap: 100px;
+    gap: 10px;
     margin-top: 10px;
 `;

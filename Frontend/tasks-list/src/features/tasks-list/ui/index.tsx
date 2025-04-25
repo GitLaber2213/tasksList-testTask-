@@ -1,35 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import { OptionalMenuContainer, TasksListContainer } from "./tasks-list.styles";
-import { Button, ButtonVariations, Input, InputVariations, ITask, ROUTES, Scroll } from "@/shared";
-import { TaskCard } from "@/entities";
+import { Button, ButtonVariations, Error, ERRORS, ErrorVariations, Loader, LoaderVariations, ROUTES, Scroll } from "@/shared";
+import { tasksListApi } from "../api/api";
+import { ListItem } from "./list-item";
 
 export const TasksList = () => {
     const navigate = useNavigate();
 
-    const items: ITask[] = [
-        { id: 1, title: "Task 1", completed: true },
-        { id: 2, title: "Task 2", completed: false },
-        { id: 3, title: "Task 3", completed: true },
-    ];
+    const { data: tasks, isLoading: getTasksLoaing, error: getTasksError } = tasksListApi.useGetTasksListQuery();
 
+    if (getTasksLoaing) return (
+        <TasksListContainer>
+            <Loader type={LoaderVariations.DEFAULT} />
+        </TasksListContainer>
+    );
+
+    if(getTasksError) return (
+        <TasksListContainer>
+            <Error type={ErrorVariations.DEFAULT}>{ERRORS.GET_DATA}</Error>
+        </TasksListContainer>
+    );
 
     return (
         <TasksListContainer>
             <OptionalMenuContainer>
                 <Button type_={ButtonVariations.BASIC} onClick={() => navigate(ROUTES.CREATE_TASK)}>Add task</Button>
             </OptionalMenuContainer>
+
             <Scroll>
-                {items.map(item =>
-                    <TaskCard
-                        key={item.id}
-                        id={item.id}
-                        completed={item.completed}
-                        checkBox={<Input type_={InputVariations.CHECK_BOX} type="checkbox" checked={item.completed} />}
-                        button={<Button type_={ButtonVariations.BASIC}>Delete</Button>}
-                    >
-                        {item.title}
-                    </TaskCard>)}
+                {tasks?.map(task => <ListItem key={task.id} task={task} />)}
             </Scroll>
         </TasksListContainer>
-    )
-}
+    );
+};
